@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package com.contoh.service;
-
 import com.contoh.dao.IdentitasPasienDao;
 import com.contoh.model.IdentitasPasien;
 import java.util.List;
@@ -24,29 +23,27 @@ public class IdentitasPasienServiceImplem implements IdentitasPasienService {
     IdentitasPasienDao identitasPasienDao;
     
     @Override
-    public List<IdentitasPasien> getIdPasien() {
-        return identitasPasienDao.getIdPasien(); 
+    public IdentitasPasien getIdPasien(int id) {
+        return identitasPasienDao.getIdPasien(id);
     }
 
     @Override
-    public IdentitasPasien getIdentitasPasien(Integer id) {
-        return identitasPasienDao.getIdentitasPasien(id); //To change body of generated methods, choose Tools | Templates.
+    public List<IdentitasPasien> listIP() {
+        return identitasPasienDao.listIP();
     }
 
     @Override
-    public IdentitasPasien saveIdPasien(IdentitasPasien IdPasien) {
-        return identitasPasienDao.saveIdPasien(IdPasien); //To change body of generated methods, choose Tools | Templates.
+    public void add(IdentitasPasien ip) {
+        identitasPasienDao.add(ip);
     }
 
     @Override
-    public IdentitasPasien updateIdPasien(IdentitasPasien IdPasien) {
-        return identitasPasienDao.updateIdpasien(IdPasien); //To change body of generated methods, choose Tools | Templates.
+    public void update(IdentitasPasien ip) {
+        identitasPasienDao.update(ip);
     }
 
     @Override
-    public IdentitasPasien deleteIdPasien(IdentitasPasien IdPasien) {
-        return identitasPasienDao.deleteIdPasien(IdPasien); //To change body of generated methods, choose Tools | Templates.
+    public void delete(int id) {
+        identitasPasienDao.delete(id);
     }
-    
-    
 }
