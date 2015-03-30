@@ -7,14 +7,16 @@ package com.contoh.controller;
 
 import com.contoh.model.IdentitasPasien;
 import com.contoh.service.IdentitasPasienService;
-import javassist.NotFoundException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 
 /**
  *
@@ -27,47 +29,60 @@ public class IdentitasPasienController {
     @Autowired
     IdentitasPasienService identitasPasienService;
     
-    @RequestMapping(value="/", method = RequestMethod.GET)
-    public String index(Model model){
-        model.addAttribute("idPasien", identitasPasienService.getIdPasien());
-        return "index";
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String list(Model model){
+        List<IdentitasPasien> listIP = identitasPasienService.listIP();
+        model.addAttribute("listIP", listIP);
+        return "list";
     }
     
-    @RequestMapping(value="Tambah", method = RequestMethod.GET)
-    public String add(Model model){
-        model.addAttribute("idPasien", new IdentitasPasien());
-        return "Tambah";
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String add(Model model) {
+        model.addAttribute("ip", new IdentitasPasien());
+        return "tambah";
     }
     
-    @RequestMapping(value="Tambah", method = RequestMethod.POST)
-    public String adding(@ModelAttribute("idPasien") IdentitasPasien IdPasien){
-        identitasPasienService.saveIdPasien(IdPasien);
-        return "redirect:/";
-    }
-    
-    @RequestMapping(value = "Edit/{id}",method = RequestMethod.GET)
-    public String edit(Model model, @PathVariable("id") Integer id) throws NotFoundException{
-        IdentitasPasien identitasPasien = identitasPasienService.getIdentitasPasien(id);
-        if(identitasPasien == null) {
-            throw new NotFoundException(null);
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String save(@ModelAttribute("ip") IdentitasPasien ip,
+    BindingResult br, Model model) {
+        if(br.hasErrors()){
+            return "tambah";
         }
-        model.addAttribute("identitasPasien", identitasPasien);
-        return "Edit";
-    }
-    
-    @RequestMapping(value = "Edit",method = RequestMethod.POST)
-    public String editing(@ModelAttribute("identitasPasien") IdentitasPasien identitasPasien){
-        identitasPasienService.updateIdPasien(identitasPasien);
-        return "redirect:/";
-    }
-    
-    @RequestMapping(value = "Delete/{id}",method = RequestMethod.GET)
-    public String deleting(@PathVariable("id") Integer id) throws NotFoundException{
-        IdentitasPasien identitasPasien = identitasPasienService.getIdentitasPasien(id);
-        if(identitasPasien == null){
-            throw new NotFoundException(null);
+        if(ip.getId() > 0){
+            identitasPasienService.update(ip);
+        } else {
+            identitasPasienService.add(ip);
         }
-        identitasPasienService.deleteIdPasien(identitasPasien);
-        return "redirect:/";
+        return "redirect:list";
     }
+    
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String edit(@PathVariable Integer id, Model model) {
+        model.addAttribute("ip", identitasPasienService.getIdPasien(id));
+        return "tambah";
+    }
+    
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable Integer id) {
+        identitasPasienService.delete(id);
+        return "redirect:/list";
+    }
+    
+ /**   @RequestMapping(value = "pdf", method = RequestMethod.GET)
+    public String getPdfReport(Model model, HttpServletResponse response){
+        List<IdentitasPasien> idPasien = identitasPasienService.getIdPasien();
+        JRDataSource dataSource = new JRBeanCollectionDataSource(idPasien);
+        
+        model.addAttribute("dataSource", dataSource);
+        return "pdfReport";
+    }
+    
+    @RequestMapping(value = "xls",method = RequestMethod.GET)
+    public String getXlsReport(Model model, HttpServletResponse response){
+        List<IdentitasPasien> idPasien = identitasPasienService.getIdPasien();
+        JRDataSource dataSource=new JRBeanCollectionDataSource(idPasien);
+        
+        model.addAttribute("dataSource", dataSource);
+        return "xlsReport";
+    } **/
 }
