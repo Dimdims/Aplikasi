@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <annotation-driven/>
+    <resources mapping="/resources/**" location="/resources/" />
+    
+    <beans:bean
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <beans:property name="prefix" value="/WEB-INF/jsp/"/>
+    <beans:property name="suffix" value=".jsp"/>
+    </beans:bean>
+    
+    <!--
+        COMPONENT-SCAN
+        Here we mention those classes' path, in which we are using
+        @Controller, @Repository, @service, @component annotations.
+        and so that it can scan and registers those beans
+        with application context
+    -->
+    <context:component-scan base-package="com.contoh"/>
+    
+    <!-- 
+        DATA SOURCE
+        We are creating a datasource here and setting properties like
+        driverClassName,url, username,password.
+        we will use this datasource bean's reference
+        in sessionFactory's dataSource property
+    -->
+    <beans:bean id="dataSource"
+    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <beans:property name="url" value="jdbc:mysql://localhost:3306/rm" />
+        <beans:property name="username" value="root" />
+        <beans:property name="password" value="admin" />
+    </beans:bean>
+    
+   <beans:bean id="sessionFactory"
+               class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+       <beans:property name="dataSource">
+           <beans:ref bean="dataSource"/>
+       </beans:property>
+       <beans:property name="packageToScan" value="com.contoh.model">
+       </beans:property>
+       <beans:property name="hibernateProperties">
+           <beans:props>
+               <beans:prop key="hibernate.hbm2ddl.auto">
+                   update
+               </beans:prop>
+               <beans:prop key="hibernate.show_sql">
+                   true
+               </beans:prop>
+               <beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
+               </beans:prop>
+           </beans:props>
+       </beans:property>
+   </beans:bean>
+   
+   <beans:bean id="transactionManager"
+   class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+       <beans:property name="sessionFactory">
+           <beans:ref bean="sessionFactory"/>
+       </beans:property>
+   </beans:bean>
+   
+   <tx:annotation-driven transaction-manager="transactionManager"/>
+<!--    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>labels</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+         max upload size 10MB 
+        <property name="maxUploadSize" value="10000000"/>
+
+    </bean>
+
+
+<bean id="excelViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+    <property name="order" value="1"/>
+    <property name="location" value="/WEB-INF/views.xml"/>
+</bean> -->
+
+</beans>
