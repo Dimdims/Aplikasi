@@ -13,9 +13,13 @@ import java.util.List;
  * @author 1110100890
  */
 public interface IdentitasPasienService {
-    public List<IdentitasPasien> getIdPasien();
-    public IdentitasPasien getIdentitasPasien(Integer id);
-    public IdentitasPasien saveIdPasien(IdentitasPasien IdPasien);
-    public IdentitasPasien updateIdPasien(IdentitasPasien IdPasien);
-    public IdentitasPasien deleteIdPasien(IdentitasPasien IdPasien);
+    public IdentitasPasien getIdPasien(int id);
+    
+    public List<IdentitasPasien> listIP();
+    
+    public void add(IdentitasPasien ip);
+    
+    public void update(IdentitasPasien ip);
+    
+    public void delete(int id);
 }
