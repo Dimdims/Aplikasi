@@ -5,17 +5,21 @@
  */
 package com.contoh.model;
 
-import com.contoh.dataEnum.JenisKelamin;
-import com.contoh.dataEnum.goldar;
-import com.contoh.dataEnum.keluarga;
-import com.contoh.dataEnum.pnd;
-import com.contoh.dataEnum.sttsNikah;
+
+import com.contoh.model.dataEnum.JenisKelamin;
+import com.contoh.model.dataEnum.goldar;
+import com.contoh.model.dataEnum.keluarga;
+import com.contoh.model.dataEnum.pnd;
+import com.contoh.model.dataEnum.sttsNikah;
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -23,25 +27,43 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="identitaspasien")
-public class IdentitasPasien {
+public class IdentitasPasien implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id; 
+    @Column
+    private Integer id;
+    @Column
     private String noRM;
+    @Column
     private String nmPasien;
+    @Column
     private String tmpLahir;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column
     private Date tglLahir;
+    @Column
     private JenisKelamin jk;
+    @Column
     private goldar goldar;
+    @Column
     private String usia;
+    @Column
     private String noKTP;
+    @Column
     private String alamat;
+    @Column
     private String pekerjaan;
+    @Column
     private sttsNikah sttsNikah;
+    @Column
     private String agama;
+    @Column
     private String noTelp;
+    @Column
     private keluarga keluarga;
+    @Column
     private String nmKeluarga;
+    @Column
     private pnd pnd;
 
     public Integer getId() {
