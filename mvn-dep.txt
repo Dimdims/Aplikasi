@@ -1,0 +1,43 @@
+C:\MVN\Aplikasi>mvn dependency:tree
+[INFO] Scanning for projects...
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Aplikasi Maven Webapp 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO]
+[INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ Aplikasi ---
+Downloading: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-arc
+hiver/2.3/plexus-archiver-2.3.pom
+Downloading: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-
+dependency-analyzer/1.4/maven-dependency-analyzer-1.4.pom
+Downloading: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-
+dependency-tree/2.1/maven-dependency-tree-2.1.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 4.953 s
+[INFO] Finished at: 2015-04-02T16:36:27-07:00
+[INFO] Final Memory: 14M/89M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-dependency-plugin:
+2.8:tree (default-cli) on project Aplikasi: Execution default-cli of goal org.ap
+ache.maven.plugins:maven-dependency-plugin:2.8:tree failed: Plugin org.apache.ma
+ven.plugins:maven-dependency-plugin:2.8 or one of its dependencies could not be
+resolved: Failed to collect dependencies at org.apache.maven.plugins:maven-depen
+dency-plugin:jar:2.8 -> org.codehaus.plexus:plexus-archiver:jar:2.3: Failed to r
+ead artifact descriptor for org.codehaus.plexus:plexus-archiver:jar:2.3: Could n
+ot transfer artifact org.codehaus.plexus:plexus-archiver:pom:2.3 from/to central
+ (https://repo.maven.apache.org/maven2): repo.maven.apache.org: Unknown host rep
+o.maven.apache.org -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e swit
+ch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please rea
+d the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/PluginResoluti
+onException
+'cmd' is not recognized as an internal or external command,
+operable program or batch file.
+C:\MVN\Aplikasi>
